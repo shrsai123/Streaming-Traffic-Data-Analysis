@@ -96,7 +96,7 @@ def write_to_mysql(df, epoch_id):
     }
     # write the DataFrame to MySQL
     df.write.jdbc(
-        url="jdbc:mysql://localhost:3306/traffic_analysis",
+        url="jdbc:mysql://localhost:3306/trafficdata",
         table="traffic_results",
         mode="append",
         properties=properties)
@@ -107,19 +107,19 @@ start_time=time.time()
 result1.writeStream \
     .outputMode("complete") \
     .foreachBatch(write_to_mysql) \
-    .trigger(processingTime='10 seconds') \
+    .trigger(processingTime='5 seconds') \
     .start()
 
 result2.writeStream \
     .outputMode("complete") \
     .foreachBatch(write_to_mysql) \
-    .trigger(processingTime='10 seconds') \
+    .trigger(processingTime='5 seconds') \
     .start()
 
 result3.writeStream \
     .outputMode("complete") \
     .foreachBatch(write_to_mysql) \
-    .trigger(processingTime='10 seconds') \
+    .trigger(processingTime='5 seconds') \
     .start()
 
 spark.streams.awaitAnyTermination(timeout=40)

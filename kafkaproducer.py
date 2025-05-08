@@ -5,7 +5,7 @@ import json
 # Set up the Kafka producer
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],api_version=(0,11,5))
 spark = SparkSession.builder.appName("TrafficData").config("spark.driver.extraClassPath", "/usr/share/java/mysql-connector-java-8.0.30.jar").getOrCreate()  
-db_url = "jdbc:mysql://localhost/traffic_analysis"
+db_url = "jdbc:mysql://localhost/trafficdata"
 db_table = "traffic_data"
 db_properties = {"user": "root", "password": "your_new_password"}
 df = spark.read.jdbc(db_url, db_table, properties=db_properties)

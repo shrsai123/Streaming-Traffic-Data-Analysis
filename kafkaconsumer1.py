@@ -9,7 +9,7 @@ spark = SparkSession.builder.appName("TrafficData").config("spark.driver.extraCl
         
 trafficDF = spark.read \
            .format("jdbc")\
-           .option("url", "jdbc:mysql://localhost/traffic_analysis") \
+           .option("url", "jdbc:mysql://localhost/trafficdata") \
            .option("dbtable","traffic_data") \
            .option("user", "root") \
            .option("password","your_new_password")\
