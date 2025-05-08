@@ -7,7 +7,7 @@ import time
 spark = SparkSession.builder\
         .appName("TrafficData")\
         .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.0")\
-        .config("spark.driver.extraClassPath","/usr/share/java/mysql-connector-java-8.0.33.jar")\
+        .config("spark.driver.extraClassPath","/usr/share/java/mysql-connector-java-8.0.30.jar")\
         .getOrCreate()
 
 
@@ -92,11 +92,11 @@ def write_to_mysql(df, epoch_id):
     # define the connection properties
     properties = {
         "user": "root",
-        "password": ""
+        "password": "your_new_password"
     }
     # write the DataFrame to MySQL
     df.write.jdbc(
-        url="jdbc:mysql://localhost:3306/trafficdata",
+        url="jdbc:mysql://localhost:3306/traffic_analysis",
         table="traffic_results",
         mode="append",
         properties=properties)
@@ -107,19 +107,19 @@ start_time=time.time()
 result1.writeStream \
     .outputMode("complete") \
     .foreachBatch(write_to_mysql) \
-    .trigger(processingTime='5 seconds') \
+    .trigger(processingTime='10 seconds') \
     .start()
 
 result2.writeStream \
     .outputMode("complete") \
     .foreachBatch(write_to_mysql) \
-    .trigger(processingTime='5 seconds') \
+    .trigger(processingTime='10 seconds') \
     .start()
 
 result3.writeStream \
     .outputMode("complete") \
     .foreachBatch(write_to_mysql) \
-    .trigger(processingTime='5 seconds') \
+    .trigger(processingTime='10 seconds') \
     .start()
 
 spark.streams.awaitAnyTermination(timeout=40)

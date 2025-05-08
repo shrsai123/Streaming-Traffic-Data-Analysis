@@ -4,15 +4,15 @@ from pyspark.sql.functions import from_unixtime,window,col,avg,to_timestamp,expr
 import time
 
  
-spark = SparkSession.builder.appName("TrafficData").config("spark.driver.extraClassPath","/usr/share/java/mysql-connector-java-8.0.33.jar").getOrCreate()
+spark = SparkSession.builder.appName("TrafficData").config("spark.driver.extraClassPath","/usr/share/java/mysql-connector-java-8.0.30.jar").getOrCreate()
 
         
 trafficDF = spark.read \
            .format("jdbc")\
-           .option("url", "jdbc:mysql://localhost/trafficdata") \
+           .option("url", "jdbc:mysql://localhost/traffic_analysis") \
            .option("dbtable","traffic_data") \
            .option("user", "root") \
-           .option("password","")\
+           .option("password","your_new_password")\
            .load() 
 
 
